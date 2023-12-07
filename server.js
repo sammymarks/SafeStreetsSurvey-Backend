@@ -8,7 +8,10 @@ const { auth } = require('express-oauth2-jwt-bearer');
 const axios = require('axios')
 const favicon = require('serve-favicon')
 const path = require('path') //path for the deployed application
-//Auth0
+// import 'dotenv/config'
+require('dotenv').config()
+
+
 
 
 

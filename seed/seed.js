@@ -82,8 +82,19 @@ const main = async () => {
         submittedBy: SiteAdmin._id,
         addressLat: "41.974663",
         addressLong: "-87.679274",
-        issue: ["Missing Infrastructure", "Dangerous Conditions"],
-        location: ["Intersection"],
+        issue: {
+            repairNeeded: false,
+            dangerousConditions: true,
+            missingInfrastructure: true
+        },
+        location: {
+            sidewalk: false,
+            bikePath: false,
+            street: false,
+            intersection: true,
+            lighting: false,
+            other: false,
+        },
         comments: "Missing stopsign. This is the only intersection around Winnemac Park that does not have a stop sign or traffic light.",
 
     })
@@ -96,8 +107,8 @@ const main = async () => {
 }
 
 reSeedAll = async () => {
-    await db.dropDatabase()
-    console.log("droppedDB")
+    // await db.dropDatabase()
+    // console.log("droppedDB")
     await main()
     console.log("completed main")
     await db.close()

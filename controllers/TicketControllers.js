@@ -29,7 +29,7 @@ async function postTicketsAndImages (req,res) {
         // console.log(req.body)
         const ticket = req.body.ticket
         const images = req.body.images
-        // console.log(ticket)
+        console.log("ticket", ticket)
         const newTicket = await Ticket.create({
             "project": ticket.project,
             "submittedBy": ticket.submittedBy,
