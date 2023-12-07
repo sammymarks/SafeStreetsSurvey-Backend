@@ -34,7 +34,8 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(logger("dev"));
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: ['http://localhost:5173', 'https://main--safe-streets-survey.netlify.app/'],
+    default: 'https://main--safe-streets-survey.netlify.app/'
 }));
 //Set max docuement size
 app.use(express.static(path.join(__dirname, 'public')));
