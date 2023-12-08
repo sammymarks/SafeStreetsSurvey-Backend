@@ -34,8 +34,8 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(logger("dev"));
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://main--safe-streets-survey.netlify.app/'],
-    default: 'https://main--safe-streets-survey.netlify.app/'
+    origin: ['http://localhost:5173', 'https://safe-streets-survey.netlify.app/'],
+    default: 'https://safe-streets-survey.netlify.app/'
 }));
 //Set max docuement size
 app.use(express.static(path.join(__dirname, 'public')));
@@ -78,6 +78,7 @@ app.get("/organizations", organizationController.getAll);
 // Project
 app.get("/projects", projectController.getAll);
 app.get("/projects/get-by-user", jwtCheck, projectController.getByUserID);
+app.put("/projects/join/:id", jwtCheck, projectController.addUserToProject)
 
 
 //ProjectImage

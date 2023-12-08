@@ -3,7 +3,8 @@ const { User,Organization,OrganizationImage,Project,ProjectImage,Ticket,TicketIm
 module.exports = {
     getAll,
     getByID,
-    getByUserID
+    getByUserID,
+    addUserToProject
 }
 
 async function getAll (req,res) {
@@ -41,3 +42,35 @@ async function getByUserID (req,res) {
         return res.status(500).json({ error: e.message })
     }
 }
+
+async function addUserToProject (req,res) {
+    try {
+        // console.log(req.body)
+        const ticket = req.body.ticket
+        const images = req.body.images
+        console.log("ticket", ticket)
+        const newTicket = await Ticket.create({
+            "project": ticket.project,
+            "submittedBy": ticket.submittedBy,
+            "addressLat": ticket.addressLat,
+            "addressLong": ticket.addressLong,
+            "issue": ticket.issue,
+            "location": ticket.location,
+            "comments": ticket.comments
+        })
+        // console.log("newTicket", newTicket)
+        console.log("imagesfile", images.uploadFiles)
+        // for (const image of images) {
+            const newImage = await TicketImage.create({
+                "ticket": newTicket._id,
+                "imageDataBase64": images.uploadFiles
+            })
+
+        // }
+
+        res.status(201).send("ticket")
+    } catch (e) {
+        return res.status(500).json({ error: e.message })
+    }
+}
+
