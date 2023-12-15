@@ -15,7 +15,7 @@
 
 
 **Table of contents:**
-1. [Backend Structure](#stucture)
+1. [Backend Structure](#structure)
 1. [Controllers](#controllers)
 1. [All Other Documentation](#documentation)
 
