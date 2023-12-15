@@ -74,7 +74,6 @@ app.get("/organizations", organizationController.getAll);
 
 // OrganizationImage
 
-
 // Project
 app.get("/projects", projectController.getAll);
 app.get("/projects/get-by-user", jwtCheck, projectController.getByUserID);
@@ -87,8 +86,6 @@ app.put("/projects/join/:id", jwtCheck, projectController.addUserToProject)
 //Ticket
 app.get("/tickets", ticketController.getAll);
 app.post("/tickets/create-new", jwtCheck, ticketController.postTicketsAndImages);
-
-
 
 //TicketImage
 app.get("/ticketimages", ticketImageController.getAll);
