@@ -46,28 +46,11 @@ async function getByUserID (req,res) {
 async function addUserToProject (req,res) {
     try {
         // console.log(req.body)
-        const ticket = req.body.ticket
-        const images = req.body.images
-        console.log("ticket", ticket)
-        const newTicket = await Ticket.create({
-            "project": ticket.project,
-            "submittedBy": ticket.submittedBy,
-            "addressLat": ticket.addressLat,
-            "addressLong": ticket.addressLong,
-            "issue": ticket.issue,
-            "location": ticket.location,
-            "comments": ticket.comments
-        })
-        // console.log("newTicket", newTicket)
-        console.log("imagesfile", images.uploadFiles)
-        // for (const image of images) {
-            const newImage = await TicketImage.create({
-                "ticket": newTicket._id,
-                "imageDataBase64": images.uploadFiles
-            })
-
-        // }
-
+        const projID = req.body.projectID
+        const userID  = req.body.userID
+        const project = await Project.findByIdAndUpdate(projID, 
+            {$push: {userParticipants : userID}}, 
+            { new: true })
         res.status(201).send("ticket")
     } catch (e) {
         return res.status(500).json({ error: e.message })
