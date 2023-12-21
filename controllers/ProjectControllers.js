@@ -4,7 +4,8 @@ module.exports = {
     getAll,
     getByID,
     getByUserID,
-    addUserToProject
+    addUserToProject,
+    removeUserFromProject
 }
 
 async function getAll (req,res) {
@@ -50,6 +51,20 @@ async function addUserToProject (req,res) {
         const userID  = req.body.userID
         const project = await Project.findByIdAndUpdate(projID, 
             {$push: {userParticipants : userID}}, 
+            { new: true })
+        res.status(201).send(project)
+    } catch (e) {
+        return res.status(500).json({ error: e.message })
+    }
+}
+
+async function removeUserFromProject (req,res) {
+    try {
+        // console.log(req.body)
+        const projID = req.body.projectID
+        const userID  = req.body.userID
+        const project = await Project.findByIdAndUpdate(projID, 
+            {$pull: {userParticipants : userID}}, 
             { new: true })
         res.status(201).send(project)
     } catch (e) {
