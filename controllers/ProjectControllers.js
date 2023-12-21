@@ -51,7 +51,7 @@ async function addUserToProject (req,res) {
         const project = await Project.findByIdAndUpdate(projID, 
             {$push: {userParticipants : userID}}, 
             { new: true })
-        res.status(201).send("ticket")
+        res.status(201).send(project)
     } catch (e) {
         return res.status(500).json({ error: e.message })
     }
