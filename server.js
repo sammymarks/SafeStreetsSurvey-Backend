@@ -77,9 +77,8 @@ app.get("/organizations", organizationController.getAll);
 // Project
 app.get("/projects", projectController.getAll);
 app.get("/projects/get-by-user", jwtCheck, projectController.getByUserID);
-// app.put("/projects/add-user", jwtCheck, projectController.addUserToProject)
-app.put("/projects/add-user", projectController.addUserToProject)
-app.put("/projects/remove-user", projectController.removeUserFromProject)
+app.put("/projects/add-user", jwtCheck, projectController.addUserToProject)
+app.put("/projects/remove-user", jwtCheck, projectController.removeUserFromProject)
 
 
 
