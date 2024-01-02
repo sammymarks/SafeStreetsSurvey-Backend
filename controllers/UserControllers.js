@@ -25,22 +25,31 @@ async function getByID (req,res) {
 
 async function getOrCreateByAuth0ID (req,res) {
     try {
-        // console.log("get User by user.sub")
-        // console.log("headers", req.headers.auth0sub)
-        // console.log("body", req.body)
+
+        //Lookup User by Auth0 sub
         const user = await User.findOne({"auth0sub" : req.headers.auth0sub})
         console.log("user:", user)
+
+        //If User Exists...
         if (user) {
+            //Projects where User is a userParticipant
             const projects = await Project.find({"userParticipants" : user._id})
                 .populate([
                     {path: "organization", model: Organization},
                 ]).exec()
             console.log("projects:", projects)
+            
+            //Tickets submittedBy User
             const tickets = await Ticket.find({"submittedBy" : user._id})                
             .populate([
                 {path: "project", model: Project},
             ]).exec()
             console.log("tickets:", tickets)
+            
+            //Organizations where User is OrgAdmim
+            const orgs = await Organization.find()
+            
+            //return object
             const userInfo = {
                 "user" : user,
                 "projects" : projects,
@@ -48,6 +57,8 @@ async function getOrCreateByAuth0ID (req,res) {
             }
             return res.status(201).send(userInfo)
         } 
+
+        //If User does not exist
         const newUser = User.create({
             "auth0sub": req.body.auth0sub,
             "displayName": req.body.displayName,
