@@ -47,13 +47,14 @@ async function getOrCreateByAuth0ID (req,res) {
             console.log("tickets:", tickets)
             
             //Organizations where User is OrgAdmim
-            const orgs = await Organization.find()
+            const orgs = await Organization.find({"orgAdmins": user._id})
             
             //return object
             const userInfo = {
                 "user" : user,
                 "projects" : projects,
-                "tickets" : tickets
+                "tickets" : tickets,
+                "orgs" : orgs
             }
             return res.status(201).send(userInfo)
         } 
@@ -67,7 +68,7 @@ async function getOrCreateByAuth0ID (req,res) {
             "isOrgAdmin": req.body.isOrgAdmin
             })
         const newUserInfo = {
-            "user" : user,
+            "user" : newUser,
             "projects" : "[]",
             "tickets" : "[]"
         }
